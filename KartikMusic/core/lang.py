@@ -91,7 +91,7 @@ class Language:
                 lang_code = await db.get_lang(chat.id)
                 lang_dict = self.languages[lang_code]
 
-                setattr(fallen, "lang", lang_dict)
+                fallen.lang = lang_dict
                 try:
                     return await func(*args, **kwargs)
                 except (

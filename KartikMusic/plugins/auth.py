@@ -57,9 +57,8 @@ rel_hist = {}
 )
 @lang.language()
 async def _admincache(_, m: types.Message):
-    if m.from_user.id in rel_hist:
-        if time.time() < rel_hist[m.from_user.id]:
-            return await m.reply_text(m.lang["admin_cache_wait"])
+    if m.from_user.id in rel_hist and time.time() < rel_hist[m.from_user.id]:
+        return await m.reply_text(m.lang["admin_cache_wait"])
 
     rel_hist[m.from_user.id] = time.time() + 600
     sent = await m.reply_text(m.lang["admin_cache_reloading"])

@@ -37,13 +37,13 @@ class Inline:
     def controls(
         self,
         chat_id: int,
-        status: str = None,
-        timer: str = None,
+        status: str | None = None,
+        timer: str | None = None,
         remove: bool = False,
         more: bool = False,
-        autoplay: bool = None,
-        thumb: bool = None,
-        lang: dict = None,
+        autoplay: bool | None = None,
+        thumb: bool | None = None,
+        lang: dict | None = None,
     ) -> types.InlineKeyboardMarkup:
         keyboard = []
         if status:

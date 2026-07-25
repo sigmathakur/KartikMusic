@@ -164,9 +164,7 @@ class TgCall(PyTgCalls):
         )
 
         try:
-            if seek_time:
-                await client.play(chat_id, stream)
-            elif await db.get_call(chat_id):
+            if seek_time or await db.get_call(chat_id):
                 await client.play(chat_id, stream)
             else:
                 await client.play(chat_id, stream)
@@ -255,7 +253,7 @@ class TgCall(PyTgCalls):
         media.message_id = msg.id
         await self.play_media(chat_id, msg, media)
 
-    async def play_next(self, chat_id: int, skip_user: str = None) -> None:
+    async def play_next(self, chat_id: int, skip_user: str | None = None) -> None:
         if loop := await db.get_loop(chat_id):
             await db.set_loop(chat_id, loop - 1)
             return await self.replay(chat_id)

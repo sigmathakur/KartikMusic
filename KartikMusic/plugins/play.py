@@ -39,7 +39,7 @@ async def play_hndlr(
     force: bool = False,
     m3u8: bool = False,
     video: bool = False,
-    url: str = None,
+    url: str | None = None,
 ) -> None:
     sent = await m.reply_text(m.lang["play_searching"])
     file = None
@@ -48,7 +48,7 @@ async def play_hndlr(
     tracks = []
 
     if media:
-        setattr(sent, "lang", m.lang)
+        sent.lang = m.lang
         file = await tg.download(m.reply_to_message, sent)
 
     elif m3u8:
