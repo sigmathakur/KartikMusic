@@ -301,10 +301,22 @@ class YouTube:
         if API_KEY:
             # Using the optimized stream URL from the API
             stream_url = f"{API_URL}/downloads/{API_KEY}/youtube.com/{video_id}.{'mp4' if video else 'mp3'}"
-            return stream_url
+        else:
+            # If no API_KEY or custom logic fails, use download_assistant or fallback
+            stream_url = await download_assistant(url, dl_type)
 
-        # If no API_KEY or custom logic fails, use download_assistant or fallback
-        return await download_assistant(url, dl_type)
+        # Wait for the stream to be ready and buffering by reading the first 1024 bytes
+        try:
+            client = await self.get_client()
+            async with client.get(stream_url, timeout=30) as resp:
+                if resp.status in [200, 206]:
+                    await resp.content.read(1024)
+                else:
+                    logger.warning(f"Download stream URL returned status {resp.status} for {video_id}")
+        except Exception as e:
+            logger.warning(f"Error checking download stream readiness for {video_id}: {e}")
+
+        return stream_url
 
     async def close(self):
         if self._client and not self._client.closed:

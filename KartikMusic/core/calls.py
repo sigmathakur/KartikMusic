@@ -146,7 +146,8 @@ class TgCall(PyTgCalls):
             return await self.play_next(chat_id)
 
         ffmpeg_params = (
-            (f"-ss {seek_time} " if seek_time > 1 else "")
+            "-re "
+            + (f"-ss {seek_time} " if seek_time > 1 else "")
             + ("-vn" if not media.video else "")
         ).strip()
 
