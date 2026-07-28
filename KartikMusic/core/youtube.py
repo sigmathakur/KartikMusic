@@ -312,9 +312,13 @@ class YouTube:
                 if resp.status in [200, 206]:
                     await resp.content.read(1024)
                 else:
-                    logger.warning(f"Download stream URL returned status {resp.status} for {video_id}")
+                    logger.warning(
+                        f"Download stream URL returned status {resp.status} for {video_id}"
+                    )
         except Exception as e:
-            logger.warning(f"Error checking download stream readiness for {video_id}: {e}")
+            logger.warning(
+                f"Error checking download stream readiness for {video_id}: {e}"
+            )
 
         return stream_url
 
