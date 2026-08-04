@@ -5,7 +5,7 @@ from pyrogram.types import (
     InlineKeyboardButton
 )
 from pyrogram.enums import ParseMode
-from anony import app
+from KartikMusic import app
 
 
 @app.on_message(filters.video_chat_started)
