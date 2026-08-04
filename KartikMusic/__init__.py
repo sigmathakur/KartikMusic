@@ -63,7 +63,7 @@ from KartikMusic.core.telegram import Telegram
 from KartikMusic.core.youtube import YouTube
 
 tg = Telegram()
-yt = YouTube
+yt = YouTube()
 
 from KartikMusic.helpers import Queue, Thumbnail
 
