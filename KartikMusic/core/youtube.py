@@ -21,8 +21,8 @@ from KartikMusic import logger
 from KartikMusic.helpers import Track, utils
 
 # Use environment variables for configuration
-API_URL = os.getenv("API_URL", "https://web.riteshyt.in").rstrip("/")
-API_KEY = os.getenv("API_KEY", "")
+API_URL = os.getenv("API_URL", "https://api.shrutibots.site").rstrip("/")
+API_KEY = os.getenv("API_KEY", "ShrutiBotsYsyLxRvVeWQaLVbOR04I")
 
 
 async def download_assistant(query: str, dl_type: str) -> str:
