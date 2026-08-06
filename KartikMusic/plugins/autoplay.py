@@ -14,9 +14,9 @@
 
 from pyrogram import filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from ShashankMusic import app
-from ShashankMusic.utils.stream.autoplay import is_autoplay, enable_autoplay, disable_autoplay
-from ShashankMusic.utils.decorators.admins import ActualAdminCB
+from KartikMusic import app
+from KartikMusic.utils.stream.autoplay import is_autoplay, enable_autoplay, disable_autoplay
+from KartikMusic.utils.decorators.admins import ActualAdminCB
 from config import BANNED_USERS
 
 @app.on_message(
