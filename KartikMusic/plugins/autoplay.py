@@ -1,32 +1,50 @@
-#
-# Copyright (C) 2025-present by TheAloneTeam@Github, < https://github.com/TheAloneTeam >.
-#
-# This file is part of < https://github.com/TheAloneTeam/KartikMusic > project,
-# and is released under the "MIT License".
-# Please see < https://github.com/TheAloneTeam/KartikMusic/blob/master/LICENSE >
-#
-# All rights reserved.
-#
-
 from pyrogram import filters, types
+from pyrogram.types import (
+    InlineKeyboardMarkup,
+    InlineKeyboardButton,
+)
 
 from KartikMusic import app, db, lang
 from KartikMusic.helpers import can_manage_vc
 
 
-@app.on_message(filters.command(["autoplay"]) & filters.group & ~app.bl_users)
+@app.on_message(filters.command(["autoplay", "ap"]) & filters.group & ~app.bl_users)
 @lang.language()
 @can_manage_vc
-async def _autoplay(_, m: types.Message):
-    if len(m.command) < 2:
-        return await m.reply_text(f"<b>Usage:</b>\n\n/{m.command[0]} [enable|disable]")
+async def autoplay_panel(_, m: types.Message):
+    status = await db.get_autoplay(m.chat.id)
 
-    arg = m.command[1].lower()
-    if arg in ["enable", "on"]:
-        await db.set_autoplay(m.chat.id, True)
-        return await m.reply_text(m.lang["autoplay_on"].format(m.from_user.mention))
-    elif arg in ["disable", "off"]:
-        await db.set_autoplay(m.chat.id, False)
-        return await m.reply_text(m.lang["autoplay_off"].format(m.from_user.mention))
+    current = "ᴇɴᴀʙʟᴇᴅ ✅" if status else "ᴅɪsᴀʙʟᴇᴅ ❌"
 
-    return await m.reply_text(f"<b>Usage:</b>\n\n/{m.command[0]} [enable|disable]")
+    text = (
+        "💮 <b>ᴀᴜᴛᴏᴘʟᴀʏ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ</b>\n\n"
+        f"➥ <b>ᴄᴜʀʀᴇɴᴛ sᴛᴀᴛᴜs :</b> {current}\n\n"
+        "ᴄʟɪᴄᴋ ᴛʜᴇ ʙᴜᴛᴛᴏɴs ʙᴇʟᴏᴡ ᴛᴏ ᴄᴏɴᴛʀᴏʟ "
+        "ᴀᴜᴛᴏᴘʟᴀʏ ꜰᴏʀ ᴛʜɪs ᴄʜᴀᴛ."
+    )
+
+    buttons = InlineKeyboardMarkup(
+        [
+            [
+                InlineKeyboardButton(
+                    "✅ ᴇɴᴀʙʟᴇ",
+                    callback_data="autoplay_enable",
+                ),
+                InlineKeyboardButton(
+                    "❌ ᴅɪsᴀʙʟᴇ",
+                    callback_data="autoplay_disable",
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    "⌫ ᴄʟᴏsᴇ",
+                    callback_data="close",
+                )
+            ],
+        ]
+    )
+
+    await m.reply_text(
+        text,
+        reply_markup=buttons,
+    )
