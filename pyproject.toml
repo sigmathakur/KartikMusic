@@ -27,7 +27,7 @@ dependencies = [
     "pytgcrypto>=1.2.11",
     "python-dotenv~=1.2.1",
     "yt-dlp[default]>=2026.3.17",
-    "PyGithub>=2.6.1",
+    "PyGithub",
 ]
 
 [project.urls]
